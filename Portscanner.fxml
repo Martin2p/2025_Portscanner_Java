@@ -6,32 +6,35 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.FXMLController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.FXMLController">
    <children>
       <VBox alignment="CENTER" layoutX="157.0" prefHeight="360.0" prefWidth="420.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <MenuBar prefHeight="19.0" prefWidth="500.0">
               <menus>
-                <Menu mnemonicParsing="false" text="Datei">
+                <Menu mnemonicParsing="false" text="File">
                   <items>
-                    <MenuItem mnemonicParsing="false" onAction="#beendenKlick" onMenuValidation="#beendenKlick" text="Beenden" />
+                    <MenuItem mnemonicParsing="false" onAction="#closeClick" onMenuValidation="#closeClick" text="Close" />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Hilfe">
+                <Menu mnemonicParsing="false" text="Help">
                   <items>
-                    <MenuItem mnemonicParsing="false" onAction="#infoKlick" onMenuValidation="#infoKlick" text="Software Version" />
+                    <MenuItem mnemonicParsing="false" onAction="#infoClick" onMenuValidation="#infoClick" text="About" />
                   </items>
                 </Menu>
               </menus>
             </MenuBar>
-            <HBox alignment="CENTER" prefHeight="327.0" prefWidth="500.0" />
-            <AnchorPane prefHeight="214.0" prefWidth="500.0">
+            <AnchorPane prefHeight="570.0" prefWidth="500.0">
                <children>
-                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="394.0" layoutY="158.0" mnemonicParsing="false" onAction="#beendenKlick" prefHeight="25.0" prefWidth="80.0" text="Beenden" textAlignment="CENTER" />
-                  <Label fx:id="ausgabeRom" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="257.0" layoutY="21.0" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: grey; -fx-border-radius: 2;" textAlignment="RIGHT" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="406.0" layoutY="487.0" mnemonicParsing="false" onAction="#closeClick" prefHeight="25.0" prefWidth="80.0" text="Close" textAlignment="CENTER" />
+                  <Label fx:id="outputIP" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="14.0" layoutY="39.0" prefHeight="25.0" prefWidth="179.0" style="-fx-background-color: white; -fx-border-color: grey; -fx-border-radius: 2;" textAlignment="RIGHT" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="113.0" layoutY="71.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Show my IP" textAlignment="CENTER" />
+                  <Label layoutX="14.0" layoutY="22.0" text="Local IP Adress" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="113.0" layoutY="375.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Local Ports" textAlignment="CENTER" />
+                  <Label fx:id="outputPorts" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="15.0" layoutY="140.0" prefHeight="231.0" prefWidth="179.0" style="-fx-background-color: white; -fx-border-color: grey; -fx-border-radius: 2;" textAlignment="RIGHT" wrapText="true" />
+                  <Label layoutX="14.0" layoutY="123.0" text="Local Open Ports" />
                </children>
             </AnchorPane>
          </children>
