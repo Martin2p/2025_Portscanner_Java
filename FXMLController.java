@@ -6,43 +6,52 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 
 public class FXMLController {
 	
 	/*
-	 * Deklarationen
+	 * Declarations
 	*/
 	
-	@FXML private Stage meineBuehne;
-	@FXML private Label ausgabeWert;
-	@FXML private Label ausgabeRom;
-	
-	@FXML private TextField eingabeRom;
-	@FXML private TextField eingabeWert;
+	@FXML private Stage myStage;
+	@FXML private Label outputIP;
+	@FXML private Label outputPorts;
 	
 	
 	/*
-	 * Die Methoden	
+	 * Methods
 	*/
 		
-		//die Methode setzt die Bühne auf den übergebenen Wert
-		public void setMeineStage(Stage meineStage) {
-			this.meineBuehne = meineStage;
+		//Method for setting the stage
+		public void setMyStage(Stage myStage) {
+			this.myStage = myStage;
 		}
 		
-		//Methode zum Beenden
-		@FXML protected void beendenKlick(ActionEvent event) {
+		//Method for closing the program
+		@FXML protected void closeClick(ActionEvent event) {
 			Platform.exit();
 		}
 		
-		//Methode für die Software-Info
-		@FXML protected void infoKlick(ActionEvent event) {
-			Alert info = new Alert(AlertType.INFORMATION, "Von Martin Tastler");
-			info.setHeaderText("Zahlenumrechner Version 1.0");
+		//Method for Software-Info
+		@FXML protected void infoClick(ActionEvent event) {
+			Alert info = new Alert(AlertType.INFORMATION, "From Martin Tastler");
+			info.setHeaderText("Portscanner Version Alpha 1");
 			info.show();
 		}
-}
 		
+		@FXML protected String gettingIP(ActionEvent event) {
+			try {
+	            String ipAdress = InetAddress.getLocalHost().getHostAddress();
+	            outputIP.setText(ipAdress);
+	            
+	        } catch (UnknownHostException e) {
+	            e.printStackTrace();
+	        }
+	        return null; 
+		}
+}
