@@ -1,44 +1,44 @@
 package src;
 
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Label;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+public class JavaFX_Portscanner extends Application {
 
-public class FXMLController {
+
+	@Override
+	public void start(Stage myStage) throws Exception {
+			
+		//creating an instance of FXMLLoader
+		FXMLLoader portscanner = new FXMLLoader(getClass().getResource("Portscanner.fxml"));
+			
+		//loading data
+		Parent root = portscanner.load();
+			
+		//getting the controller 
+		FXMLController trController = portscanner.getController();
+			
+		//give it to the stage
+		trController.setMyStage(myStage);
+			
+		//create the scene
+		Scene myScene = new Scene(root, 500, 560);
+			
 	
-	/*
-	 * Declarations
-	*/
-	
-	@FXML private Stage myStage;
-	@FXML private Label outputIP;
-	@FXML private Label output;
-	
-	
-	/*
-	 * Methods
-	*/
+		myStage.setTitle("Portscanner");
+
+		myStage.setScene(myScene);
+
+		myStage.setResizable(false);
+
+		myStage.show();
+	}
 		
-		//Method for setting the stage
-		public void setMyStage(Stage myStage) {
-			this.myStage = myStage;
-		}
-		
-		//Method for closing the program
-		@FXML protected void closeClick(ActionEvent event) {
-			Platform.exit();
-		}
-		
-		//Method for Software-Info
-		@FXML protected void infoClick(ActionEvent event) {
-			Alert info = new Alert(AlertType.INFORMATION, "From Martin Tastler");
-			info.setHeaderText("Portscanner Version Alpha 1");
-			info.show();
-		}
+	public static void main(String[] args) {
+		//Start
+		launch(args);
+	}
 }
-	
