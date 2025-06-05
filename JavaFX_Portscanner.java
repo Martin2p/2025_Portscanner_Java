@@ -28,7 +28,7 @@ public class JavaFX_Portscanner extends Application {
 		Scene myScene = new Scene(root, 500, 560);
 			
 	
-		myStage.setTitle("Portscanner");
+		myStage.setTitle("Portscanner - Alpha 2");
 
 		myStage.setScene(myScene);
 
