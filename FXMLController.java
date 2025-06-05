@@ -54,4 +54,33 @@ public class FXMLController {
 	        }
 	        return null; 
 		}
+
+	@FXML protected String gettingOpenPorts(ActionEvent event) {
+		
+			//Port range 1 to 65535
+			int startPort = 1;
+			int endPort = 65535;
+			
+			List<Integer> freePorts = new ArrayList<>();
+		
+			for(int port = startPort; port <= endPort; port++) {
+				if(isPortFree(port)) {
+					freePorts.add(port);
+				}
+			}
+			
+			//for (int i = 0; ) 
+			//outputPorts.setText(freePorts);
+		}
+		
+		//Method for port is open or not
+		private static boolean isPortFree(int port) {
+			
+			try (ServerSocket serverSocket = new ServerSocket(port)) {
+				serverSocket.setReuseAddress(true);
+				return true;
+			} catch (IOException e) {
+				return false;
+			}
+		}
 }
