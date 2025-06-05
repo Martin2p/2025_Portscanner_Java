@@ -88,4 +88,35 @@ public class FXMLController {
 			return false;
 		}
 	}
+
+	
+	@FXML protected void gettingOpenPorts(ActionEvent event) {
+		
+		//our own PC is the target for test
+		String targetHost = "127.0.0.1";
+			
+		//Port range 1 to 65535
+		int startPort = 1;
+		int endPort = 65535;
+			
+		//Timeout if now responce in milliseconds
+		int timeout = 200;
+			
+		List<Integer> openPorts = new ArrayList<>();
+		
+		StringBuilder output = new StringBuilder();
+
+		for(int port = startPort; port <= endPort; port++) {
+				
+			try (Socket socket = new Socket()) {
+				socket.connect(new InetSocketAddress(targetHost, port), timeout);
+				openPorts.add(port);
+				output.append("Port ").append(port).append(" is open.");
+				
+			} catch (IOException e) {
+				openPortsText.setText("Timeout!");
+			}
+		}
+		openPortsText.setText(output.toString());
+	}
 }
