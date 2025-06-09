@@ -30,16 +30,19 @@
             <AnchorPane prefHeight="570.0" prefWidth="500.0">
                <children>
                   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="274.0" layoutY="491.0" mnemonicParsing="false" onAction="#closeClick" prefHeight="25.0" prefWidth="80.0" text="Close" textAlignment="CENTER" />
-                  <Label fx:id="outputIP" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="14.0" layoutY="39.0" prefHeight="25.0" prefWidth="179.0" style="-fx-background-color: white; -fx-border-color: grey; -fx-border-radius: 2;" textAlignment="RIGHT" />
+                  <Label fx:id="outputIP" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="14.0" layoutY="41.0" prefHeight="25.0" prefWidth="179.0" style="-fx-background-color: white; -fx-border-color: grey; -fx-border-radius: 2;" textAlignment="RIGHT" />
                   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="98.0" layoutY="73.0" mnemonicParsing="false" onAction="#gettingIP" prefHeight="27.0" prefWidth="95.0" text="Show my IP" textAlignment="CENTER" />
-                  <Label layoutX="14.0" layoutY="22.0" text="IP Adress" />
+                  <Label layoutX="14.0" layoutY="12.0" text="my IP Adress" />
                   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="146.0" layoutY="379.0" mnemonicParsing="false" onAction="#gettingFreePorts" prefHeight="25.0" prefWidth="80.0" text="free Ports" textAlignment="CENTER" />
-                  <Label layoutX="14.0" layoutY="123.0" prefHeight="19.0" prefWidth="172.0" text="Free Ports on your computer" />
-                  <TextArea fx:id="freePortsText" layoutX="14.0" layoutY="140.0" prefHeight="231.0" prefWidth="211.0" wrapText="true" />
-                  <Label layoutX="274.0" layoutY="123.0" prefHeight="19.0" prefWidth="172.0" text="Open Ports on your system" />
-                  <TextArea fx:id="openPortsText" layoutX="274.0" layoutY="140.0" prefHeight="231.0" prefWidth="211.0" wrapText="true" />
+                  <Label layoutX="12.0" layoutY="221.0" prefHeight="19.0" prefWidth="172.0" text="Free Ports on your computer" />
+                  <TextArea fx:id="freePortsText" layoutX="14.0" layoutY="241.0" prefHeight="130.0" prefWidth="211.0" wrapText="true" />
+                  <Label layoutX="274.0" layoutY="221.0" prefHeight="19.0" prefWidth="193.0" text="Open Ports on target IP Address" />
+                  <TextArea fx:id="openPortsText" layoutX="274.0" layoutY="241.0" prefHeight="130.0" prefWidth="211.0" wrapText="true" />
                   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="406.0" layoutY="379.0" mnemonicParsing="false" onAction="#gettingOpenPorts" prefHeight="25.0" prefWidth="80.0" text="open Ports" textAlignment="CENTER" />
                   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="153.0" layoutY="491.0" mnemonicParsing="false" onAction="#clear" prefHeight="25.0" prefWidth="80.0" text="Clear" textAlignment="CENTER" />
+                  <Label layoutX="274.0" layoutY="12.0" text="scan local Network for hosts" />
+                  <TextArea fx:id="localHosts" layoutX="274.0" layoutY="35.0" prefHeight="130.0" prefWidth="211.0" wrapText="true" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="406.0" layoutY="172.0" mnemonicParsing="false" onAction="#gettingHosts" prefHeight="25.0" prefWidth="80.0" text="Scan" textAlignment="CENTER" />
                </children>
             </AnchorPane>
          </children>
