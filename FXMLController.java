@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 public class FXMLController {
 	
 	/*
@@ -29,7 +30,7 @@ public class FXMLController {
 	@FXML private Label outputIP;
 	@FXML private TextArea freePortsText;
 	@FXML private TextArea openPortsText;
-	
+	@FXML private TextArea localHosts;
 	
 	/*
 	 * Methods
@@ -116,6 +117,8 @@ public class FXMLController {
 			List<Integer> openPorts = new ArrayList<>();
 		
 			StringBuilder output = new StringBuilder();
+
+			
 			
 			for(int port = startPort; port <= endPort; port++) {
 				
@@ -130,4 +133,10 @@ public class FXMLController {
 			}
 			openPortsText.setText(output.toString());
 		}
+		
+		
+		@FXML protected void gettingHosts(ActionEvent event) {
+			
+		}
+		
 }
