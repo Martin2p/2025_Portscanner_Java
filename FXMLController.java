@@ -133,13 +133,8 @@ public class FXMLController {
 			}
 			openPortsText.setText(output.toString());
 		}
-		
-		
-		@FXML protected void gettingHosts(ActionEvent event) {
-			
-		}
-
-	@FXML protected void gettingHosts(ActionEvent event) throws IOException {
+	
+		@FXML protected void gettingHosts(ActionEvent event) throws IOException {
 			
 			//for that GUI does not freeze, there is a own task in the background
 			Task<Void> scanTask = new Task<>() {
@@ -167,6 +162,7 @@ public class FXMLController {
 								break; 
 					
 							} catch (IOException ignored) {
+								//port not open
 							}
 						}
 				}
@@ -176,5 +172,10 @@ public class FXMLController {
 					return null;
 				}
 			};
+			// Start task in a new thread
+		        Thread thread = new Thread(scanTask);
+			// ends automatic with the app
+		        thread.setDaemon(true); 
+		        thread.start();
 		}
 }
