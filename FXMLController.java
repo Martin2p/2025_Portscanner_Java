@@ -138,5 +138,43 @@ public class FXMLController {
 		@FXML protected void gettingHosts(ActionEvent event) {
 			
 		}
-		
+
+	@FXML protected void gettingHosts(ActionEvent event) throws IOException {
+			
+			//for that GUI does not freeze, there is a own task in the background
+			Task<Void> scanTask = new Task<>() {
+				@Override
+				protected Void call() throws Exception {
+					String subnet = "192.168.0";
+					int[] portsToCheck = {22, 80, 443, 62078, 5555, 9100};
+					
+					List<String> hosts = new ArrayList<>();
+					StringBuilder outputHosts = new StringBuilder();
+					
+					for (int i = 1; i < 255; i++) {
+						String host = subnet + "." + i;
+						
+						for (int port : portsToCheck) {
+							
+							try (Socket socket = new Socket()) {
+								
+								socket.connect(new InetSocketAddress(host, port), 200);
+								hosts.add(host);
+								
+								outputHosts.append("Host: ")
+											.append(host)
+											.append(" is reachable on port").append(port).append("\n");
+								break; 
+					
+							} catch (IOException ignored) {
+							}
+						}
+				}
+				
+					Platform.runLater(() -> localHosts.setText(outputHosts.toString()));
+			
+					return null;
+				}
+			};
+		}
 }
