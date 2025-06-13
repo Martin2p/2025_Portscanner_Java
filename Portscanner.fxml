@@ -5,13 +5,18 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.FXMLController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.FXMLController">
    <children>
-      <VBox alignment="CENTER" layoutX="157.0" prefHeight="360.0" prefWidth="420.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" layoutX="157.0" prefHeight="560.0" prefWidth="476.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <MenuBar prefHeight="19.0" prefWidth="500.0">
               <menus>
@@ -27,22 +32,43 @@
                 </Menu>
               </menus>
             </MenuBar>
-            <AnchorPane prefHeight="570.0" prefWidth="500.0">
+            <AnchorPane prefHeight="533.0" prefWidth="777.0">
                <children>
-                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="274.0" layoutY="491.0" mnemonicParsing="false" onAction="#closeClick" prefHeight="25.0" prefWidth="80.0" text="Close" textAlignment="CENTER" />
-                  <Label fx:id="outputIP" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="14.0" layoutY="41.0" prefHeight="25.0" prefWidth="179.0" style="-fx-background-color: white; -fx-border-color: grey; -fx-border-radius: 2;" textAlignment="RIGHT" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="647.0" layoutY="490.0" mnemonicParsing="false" onAction="#closeClick" prefHeight="25.0" prefWidth="80.0" text="Close" textAlignment="CENTER" />
+                  <Label fx:id="outputIP" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="14.0" layoutY="35.0" prefHeight="25.0" prefWidth="179.0" style="-fx-background-color: white; -fx-border-color: grey; -fx-border-radius: 2;" textAlignment="RIGHT" />
                   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="98.0" layoutY="73.0" mnemonicParsing="false" onAction="#gettingIP" prefHeight="27.0" prefWidth="95.0" text="Show my IP" textAlignment="CENTER" />
                   <Label layoutX="14.0" layoutY="12.0" text="my IP Adress" />
-                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="146.0" layoutY="379.0" mnemonicParsing="false" onAction="#gettingFreePorts" prefHeight="25.0" prefWidth="80.0" text="free Ports" textAlignment="CENTER" />
-                  <Label layoutX="12.0" layoutY="221.0" prefHeight="19.0" prefWidth="172.0" text="Free Ports on your computer" />
-                  <TextArea fx:id="freePortsText" layoutX="14.0" layoutY="241.0" prefHeight="130.0" prefWidth="211.0" wrapText="true" />
-                  <Label layoutX="274.0" layoutY="221.0" prefHeight="19.0" prefWidth="193.0" text="Open Ports on target IP Address" />
-                  <TextArea fx:id="openPortsText" layoutX="274.0" layoutY="241.0" prefHeight="130.0" prefWidth="211.0" wrapText="true" />
-                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="406.0" layoutY="379.0" mnemonicParsing="false" onAction="#gettingOpenPorts" prefHeight="25.0" prefWidth="80.0" text="open Ports" textAlignment="CENTER" />
-                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="153.0" layoutY="491.0" mnemonicParsing="false" onAction="#clear" prefHeight="25.0" prefWidth="80.0" text="Clear" textAlignment="CENTER" />
-                  <Label layoutX="274.0" layoutY="12.0" text="scan local Network for hosts" />
-                  <TextArea fx:id="localHosts" layoutX="274.0" layoutY="35.0" prefHeight="130.0" prefWidth="211.0" wrapText="true" />
-                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="406.0" layoutY="172.0" mnemonicParsing="false" onAction="#gettingHosts" prefHeight="25.0" prefWidth="80.0" text="Scan" textAlignment="CENTER" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="113.0" layoutY="284.0" mnemonicParsing="false" onAction="#gettingFreePorts" prefHeight="25.0" prefWidth="80.0" text="free Ports" textAlignment="CENTER" />
+                  <Label layoutX="18.0" layoutY="119.0" prefHeight="19.0" prefWidth="172.0" text="Free Ports on your computer" />
+                  <TextArea fx:id="freePortsText" layoutX="18.0" layoutY="144.0" prefHeight="130.0" prefWidth="172.0" wrapText="true" />
+                  <Label layoutX="16.0" layoutY="311.0" prefHeight="19.0" prefWidth="193.0" text="Open Ports on your System" />
+                  <TextArea fx:id="openPortsText" layoutX="18.0" layoutY="335.0" prefHeight="130.0" prefWidth="172.0" wrapText="true" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="113.0" layoutY="477.0" mnemonicParsing="false" onAction="#gettingOpenPorts" prefHeight="25.0" prefWidth="80.0" text="open Ports" textAlignment="CENTER" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="543.0" layoutY="490.0" mnemonicParsing="false" onAction="#clear" prefHeight="25.0" prefWidth="80.0" text="Clear" textAlignment="CENTER" />
+                  <Label layoutX="243.0" layoutY="12.0" prefHeight="19.0" prefWidth="233.0" text="Scan local Network for hosts" />
+                  <TextArea fx:id="localHosts" layoutX="243.0" layoutY="91.0" prefHeight="181.0" prefWidth="275.0" wrapText="true" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="436.0" layoutY="284.0" mnemonicParsing="false" onAction="#gettingHosts" prefHeight="25.0" prefWidth="80.0" text="Scan" textAlignment="CENTER" />
+                  <AnchorPane layoutX="518.0" layoutY="91.0" prefHeight="113.0" prefWidth="59.0">
+                     <children>
+                        <ProgressIndicator fx:id="progressIndicator" prefHeight="195.0" prefWidth="30.0" progress="0.0" visible="false" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="202.0" layoutY="334.0" prefHeight="130.0" prefWidth="59.0">
+                     <children>
+                        <ProgressIndicator fx:id="progressIndicator1" prefHeight="195.0" prefWidth="30.0" progress="0.0" visible="false" />
+                     </children>
+                  </AnchorPane>
+                  <Separator layoutX="209.0" layoutY="5.0" orientation="VERTICAL" prefHeight="526.0" prefWidth="17.0" />
+                  <ToolBar layoutX="243.0" layoutY="40.0" prefHeight="40.0" prefWidth="216.0">
+                    <items>
+                        <RadioButton fx:id="mdnsRadio" mnemonicParsing="false" selected="true" text="with mDNS">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="scanMethode" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="arpRadio" mnemonicParsing="false" text="with ARP Table" toggleGroup="$scanMethode" />
+                    </items>
+                  </ToolBar>
                </children>
             </AnchorPane>
          </children>
