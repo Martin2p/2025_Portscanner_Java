@@ -25,10 +25,10 @@ public class JavaFX_Portscanner extends Application {
 		trController.setMyStage(myStage);
 			
 		//create the scene
-		Scene myScene = new Scene(root, 500, 560);
+		Scene myScene = new Scene(root, 750, 560);
 			
 	
-		myStage.setTitle("Portscanner - Version 0.3");
+		myStage.setTitle("Portscanner - Version 0.5");
 
 		myStage.setScene(myScene);
 
