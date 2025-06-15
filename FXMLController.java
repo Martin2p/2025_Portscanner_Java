@@ -95,7 +95,7 @@ public class FXMLController {
 		//Method for Software-Info
 		@FXML protected void infoClick(ActionEvent event) {
 			Alert info = new Alert(AlertType.INFORMATION, "From Martin Tastler");
-			info.setHeaderText("Portscanner Version Alpha 2");
+			info.setHeaderText("Portscanner Version 1.0");
 			info.show();
 		}
 		
