@@ -13,8 +13,9 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.FXMLController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="580.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.FXMLController">
    <children>
       <VBox alignment="CENTER" layoutX="157.0" prefHeight="560.0" prefWidth="476.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -32,18 +33,21 @@
                 </Menu>
               </menus>
             </MenuBar>
-            <AnchorPane prefHeight="533.0" prefWidth="777.0">
+            <AnchorPane prefHeight="533.0" prefWidth="580.0">
                <children>
-                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="647.0" layoutY="490.0" mnemonicParsing="false" onAction="#closeClick" prefHeight="25.0" prefWidth="80.0" text="Close" textAlignment="CENTER" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="480.0" layoutY="490.0" mnemonicParsing="false" onAction="#closeClick" prefHeight="25.0" prefWidth="80.0" text="Close" textAlignment="CENTER" />
                   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="94.0" layoutY="77.0" mnemonicParsing="false" onAction="#gettingIP" prefHeight="27.0" prefWidth="95.0" text="Show my IP" textAlignment="CENTER" />
                   <Label layoutX="14.0" layoutY="12.0" text="my IP Adress" />
                   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="113.0" layoutY="284.0" mnemonicParsing="false" onAction="#gettingFreePorts" prefHeight="25.0" prefWidth="80.0" text="free Ports" textAlignment="CENTER" />
                   <Label layoutX="18.0" layoutY="119.0" prefHeight="19.0" prefWidth="172.0" text="Free Ports on your computer" />
-                  <TextArea fx:id="freePortsText" layoutX="18.0" layoutY="144.0" prefHeight="130.0" prefWidth="179.0" wrapText="true" />
+                  <TextArea fx:id="freePortsText" layoutX="18.0" layoutY="144.0" prefHeight="130.0" prefWidth="179.0" wrapText="true">
+                     <font>
+                        <Font size="12.0" />
+                     </font></TextArea>
                   <Label layoutX="16.0" layoutY="311.0" prefHeight="19.0" prefWidth="193.0" text="Open Ports on your System" />
                   <TextArea fx:id="openPortsText" layoutX="18.0" layoutY="335.0" prefHeight="130.0" prefWidth="179.0" wrapText="true" />
                   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="113.0" layoutY="477.0" mnemonicParsing="false" onAction="#gettingOpenPorts" prefHeight="25.0" prefWidth="80.0" text="open Ports" textAlignment="CENTER" />
-                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="543.0" layoutY="490.0" mnemonicParsing="false" onAction="#clear" prefHeight="25.0" prefWidth="80.0" text="Clear" textAlignment="CENTER" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="396.0" layoutY="490.0" mnemonicParsing="false" onAction="#clear" prefHeight="25.0" prefWidth="80.0" text="Clear" textAlignment="CENTER" />
                   <Label layoutX="243.0" layoutY="12.0" prefHeight="19.0" prefWidth="233.0" text="Scan local Network for hosts" />
                   <TextArea fx:id="localHosts" layoutX="243.0" layoutY="91.0" prefHeight="181.0" prefWidth="317.0" wrapText="true" />
                   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="480.0" layoutY="284.0" mnemonicParsing="false" onAction="#gettingHosts" prefHeight="25.0" prefWidth="80.0" text="Scan" textAlignment="CENTER" />
@@ -69,7 +73,10 @@
                         <RadioButton fx:id="arpRadio" mnemonicParsing="false" text="with ARP Table" toggleGroup="$scanMethode" />
                     </items>
                   </ToolBar>
-                  <TextArea fx:id="outputIP" layoutX="14.0" layoutY="31.0" prefHeight="27.0" prefWidth="179.0" />
+                  <TextArea fx:id="outputIP" layoutX="14.0" layoutY="31.0" prefHeight="27.0" prefWidth="179.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font></TextArea>
                </children>
             </AnchorPane>
          </children>
