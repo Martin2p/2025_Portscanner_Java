@@ -68,10 +68,15 @@ public class FXMLController {
 	@FXML private TextArea freePortsText;
 	@FXML private TextArea openPortsText;
 	@FXML private TextArea localHosts;
-	@FXML private ProgressIndicator progressIndicator;
+	@FXML private ProgressIndicator progressLocal;
+	@FXML private ProgressIndicator progressSystem;
 	
 	@FXML private RadioButton arpRadio;
 	@FXML private RadioButton mdnsRadio;
+	
+	//for running tasks
+	private Task<Void> currentMdnsTask;
+	private JmDNS runningJmDNS = null;
 	
 	/*
 	 * Methods
@@ -146,6 +151,42 @@ public class FXMLController {
 		}
 		
 		
+		//Method to cancel search
+		@FXML protected void abortScan(ActionEvent event) {
+			//controll
+		    System.out.println("Abort clicked. currentMdnsTask: " + currentMdnsTask);
+
+			
+			if (currentMdnsTask != null &&  currentMdnsTask.isRunning()) {
+				 System.out.println("Cancelling current scan...");
+				 currentMdnsTask.cancel();
+				
+		         localHosts.setText("Scan stopped.");
+
+		     // if JmDNS is still active -> close it
+		     if (runningJmDNS != null) {
+
+		         try {
+		             runningJmDNS.close();
+		             System.out.println("JmDNS wurde manuell geschlossen.");
+		            } catch (IOException e) {
+		            	System.err.println("Fehler beim Schließen von JmDNS: " + e.getMessage());
+		            }
+		            runningJmDNS = null;
+		        }
+		        // GUI zurücksetzen
+		        Platform.runLater(() -> {
+			        progressLocal.progressProperty().unbind();
+			        progressLocal.setProgress(0);
+			        progressLocal.setVisible(false);
+			        localHosts.setText("Scan stopped.");
+		        });
+			} else {
+			 localHosts.setText("Nothing to stop!");
+			}
+		}
+		
+		
 		//Portscan on your own system
 		@FXML protected void gettingOpenPorts(ActionEvent event) {
 		
@@ -155,10 +196,10 @@ public class FXMLController {
 			
 					//GUI-info for scanning
 					Platform.runLater(() -> { 
-						localHosts.setText("Scanning...");
+						openPortsText.setText("Scanning...");
+						
 						//show an visual indicator
 						progressSystem.setVisible(true);
-						progressSystem.setProgress(-1); 
 					});
 					
 					//our own PC is the target for test
@@ -169,7 +210,7 @@ public class FXMLController {
 					int endPort = 65535;
 					
 					//Timeout if now response in milliseconds
-					int timeout = 200;
+					int timeout = 10;
 					
 					List<Integer> openPorts = new ArrayList<>();
 				
@@ -182,16 +223,27 @@ public class FXMLController {
 							openPorts.add(port);
 							output.append("Port ").append(port).append(" is open.\n");
 							
+							//update for visuall
+							updateProgress(port - startPort, endPort - startPort);
+							
 						} catch (IOException e) {
-							openPortsText.setText("No Ports are open!");
 						}
 					}
 				openPortsText.setText(output.toString());
+				
+				// GUI: hiding progress
+				Platform.runLater(() -> {
+					progressSystem.progressProperty().unbind();
+					progressSystem.setProgress(0);
+					progressSystem.setVisible(false);
+				});
+				
 				return null;
 				}
 				
 			};
 			//updates the progress animation
+			progressSystem.setProgress(-1); 
 			progressSystem.progressProperty().bind(scanTask.progressProperty());
 			
 			//Start task in a new thread
@@ -249,79 +301,112 @@ public class FXMLController {
 		
 
 		//Networkscan with mDNS
-		protected void startMdnsScan() throws IOException {
-			//use local IP Addresses
-			InetAddress localHost = InetAddress.getLocalHost();
-			
-			//starting JmDNS instance
-			try (JmDNS jmdns = JmDNS.create(localHost)) {
-				
-				//types like _http._tcp.local. oder _printer._tcp.local
-				String serviceType = "_services._dns-sd._udp.local.";
-				jmdns.addServiceListener(serviceType, new ServiceListener() {
-	                @Override
-	                public void serviceAdded(ServiceEvent event) {
-	                    System.out.println("Service hinzugefügt: " + event.getName());
-	                    // Optional: Serviceinfos 
-	                    jmdns.requestServiceInfo(event.getType(), event.getName(), true);
-	                }
+		protected void startMdnsScan(Task<?> task) throws IOException, InterruptedException {
+		    InetAddress localHost = InetAddress.getLocalHost();
+		    runningJmDNS = JmDNS.create(localHost);
 
-	                @Override
-	                public void serviceRemoved(ServiceEvent event) {
-	                    System.out.println("Service entfernt: " + event.getName());
-	                }
+		    String discoveryService = "_services._dns-sd._udp.local.";
 
-	                @Override
-	                public void serviceResolved(ServiceEvent event) {
-	                    ServiceInfo info = event.getInfo();
-	                    System.out.println("Service gefunden:");
-	                    System.out.println("  Name: " + info.getName());
-	                    System.out.println("  Adresse: " + info.getInetAddresses()[0].getHostAddress());
-	                    System.out.println("  Port: " + info.getPort());
-	                }
-	            });
-			}
+		    runningJmDNS.addServiceListener(discoveryService, new ServiceListener() {
+		        @Override
+		        public void serviceAdded(ServiceEvent event) {
+		            String type = event.getName() + "." + event.getType();
+		            System.out.println("Found service: " + type);
+
+		            // Jetzt nach konkreten Services dieses Typs lauschen:
+		            runningJmDNS.addServiceListener(type, new ServiceListener() {
+		                @Override
+		                public void serviceResolved(ServiceEvent event) {
+		                    ServiceInfo info = event.getInfo();
+		                    String name = info.getName();
+		                    String address = info.getInetAddresses().length > 0
+		                            ? info.getInetAddresses()[0].getHostAddress()
+		                            : "unknown";
+		                    int port = info.getPort();
+
+		                    System.out.println("Found: " + name + " at " + address + ":" + port);
+
+		                    Platform.runLater(() -> {
+		                        localHosts.appendText("Service: " + name + "\n");
+		                        localHosts.appendText("Address: " + address + "\n");
+		                        localHosts.appendText("Port: " + port + "\n\n");
+		                    });
+		                }
+
+		                @Override
+		                public void serviceAdded(ServiceEvent e) { }
+		                @Override
+		                public void serviceRemoved(ServiceEvent e) { }
+		            });
+		        }
+
+		        @Override public void serviceResolved(ServiceEvent e) { }
+		        @Override public void serviceRemoved(ServiceEvent e) { }
+		    });
+
+		    // Wartezeit zum Finden
+		    int waitMs = 100;
+		    int totalTime = 10_000;
+
+		    for (int waited = 0; waited < totalTime; waited += waitMs) {
+		        if (task.isCancelled()) {
+		            System.out.println("mDNS-Scan stopped.");
+		            break;
+		        }
+		        Thread.sleep(waitMs);
+		    }
+
+		    // Aufräumen
+		    runningJmDNS.close();
+		    runningJmDNS = null;
 		}
 
 		
 		// Scanning for other hosts in the local network
 		@FXML protected void gettingHosts(ActionEvent event) throws IOException {
 			
+			//just to controll
+			System.out.println("Starting scan task...");
 			//for that GUI does not freeze, there is a own task in the background
-			Task<Void> scanTask = new Task<>() {
+			currentMdnsTask = new Task<>() {
 				@Override
 				protected Void call() throws Exception {
 					
 					//GUI-info for scanning
 					Platform.runLater(() -> { 
 						localHosts.setText("Scanning...");
+						System.out.println("Scan task is running...");
 						//show an visual indicator
-						progressIndicator.setVisible(true);
-						progressIndicator.setProgress(-1); 
+						progressLocal.setVisible(true);
 					});
 				
 					//with ARP Methode
 					if (arpRadio.isSelected()) {
 					    startArpScan();
-					
+					    
 					//with mDNS Methode
 					} else if (mdnsRadio.isSelected()) {
-					    startMdnsScan();
+						startMdnsScan(this);
+						return null;
 					} else {
 		                Platform.runLater(() -> localHosts.setText("Bitte eine Scan-Methode auswählen."));
 		            }
-					
-					// GUI: Fortschrittsanzeige wieder verstecken
-		            Platform.runLater(() -> progressIndicator.setVisible(false));
+					// GUI: hiding progress
+					Platform.runLater(() -> {
+						progressLocal.progressProperty().unbind();
+						progressLocal.setProgress(0);
+						progressLocal.setVisible(false);
+					});
 	
 		            return null;
 				}
 			};
 			//updates the progress animation
-			 progressIndicator.progressProperty().bind(scanTask.progressProperty());
+			progressLocal.setProgress(-1); 
+			progressLocal.progressProperty().bind(currentMdnsTask.progressProperty());
 			
 			//Start task in a new thread
-	        Thread thread = new Thread(scanTask);
+	        Thread thread = new Thread(currentMdnsTask);
 	
 	        // ends automatic with the app
 	        thread.setDaemon(true);
