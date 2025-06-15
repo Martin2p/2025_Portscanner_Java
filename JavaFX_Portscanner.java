@@ -33,7 +33,6 @@ import javafx.stage.Stage;
 
 public class JavaFX_Portscanner extends Application {
 
-
 	@Override
 	public void start(Stage myStage) throws Exception {
 			
@@ -52,13 +51,9 @@ public class JavaFX_Portscanner extends Application {
 		//create the scene
 		Scene myScene = new Scene(root, 750, 560);
 			
-	
-		myStage.setTitle("Portscanner - Version 0.5");
-
+		myStage.setTitle("Portscanner - Version 1.0");
 		myStage.setScene(myScene);
-
 		myStage.setResizable(false);
-
 		myStage.show();
 	}
 		
