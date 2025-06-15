@@ -47,6 +47,7 @@
                   <Label layoutX="243.0" layoutY="12.0" prefHeight="19.0" prefWidth="233.0" text="Scan local Network for hosts" />
                   <TextArea fx:id="localHosts" layoutX="243.0" layoutY="91.0" prefHeight="181.0" prefWidth="317.0" wrapText="true" />
                   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="480.0" layoutY="284.0" mnemonicParsing="false" onAction="#gettingHosts" prefHeight="25.0" prefWidth="80.0" text="Scan" textAlignment="CENTER" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="396.0" layoutY="284.0" mnemonicParsing="false" onAction="#abortScan" prefHeight="25.0" prefWidth="80.0" text="Stop!" textAlignment="CENTER" />
                   <AnchorPane layoutX="243.0" layoutY="119.0" prefHeight="113.0" prefWidth="59.0">
                      <children>
                         <ProgressIndicator fx:id="progressLocal" prefHeight="195.0" prefWidth="30.0" progress="0.0" visible="false" />
