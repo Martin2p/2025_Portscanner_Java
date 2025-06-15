@@ -149,32 +149,57 @@ public class FXMLController {
 		//Portscan on your own system
 		@FXML protected void gettingOpenPorts(ActionEvent event) {
 		
-			//our own PC is the target for test
-			String targetHost = "127.0.0.1";
+			Task<Void> scanTask = new Task<>() {
+				@Override
+				protected Void call() throws Exception {
 			
-			//Port range 1 to 65535
-			int startPort = 1;
-			int endPort = 65535;
-			
-			//Timeout if now responce in milliseconds
-			int timeout = 200;
-			
-			List<Integer> openPorts = new ArrayList<>();
-		
-			StringBuilder output = new StringBuilder();
-
-			for(int port = startPort; port <= endPort; port++) {
-				
-				try (Socket socket = new Socket()) {
-					socket.connect(new InetSocketAddress(targetHost, port), timeout);
-					openPorts.add(port);
-					output.append("Port ").append(port).append(" is open.\n");
+					//GUI-info for scanning
+					Platform.runLater(() -> { 
+						localHosts.setText("Scanning...");
+						//show an visual indicator
+						progressSystem.setVisible(true);
+						progressSystem.setProgress(-1); 
+					});
 					
-				} catch (IOException e) {
-					openPortsText.setText("Timeout!");
+					//our own PC is the target for test
+					String targetHost = "127.0.0.1";
+					
+					//Port range 1 to 65535
+					int startPort = 1;
+					int endPort = 65535;
+					
+					//Timeout if now response in milliseconds
+					int timeout = 200;
+					
+					List<Integer> openPorts = new ArrayList<>();
+				
+					StringBuilder output = new StringBuilder();
+		
+					for(int port = startPort; port <= endPort; port++) {
+						
+						try (Socket socket = new Socket()) {
+							socket.connect(new InetSocketAddress(targetHost, port), timeout);
+							openPorts.add(port);
+							output.append("Port ").append(port).append(" is open.\n");
+							
+						} catch (IOException e) {
+							openPortsText.setText("No Ports are open!");
+						}
+					}
+				openPortsText.setText(output.toString());
+				return null;
 				}
-			}
-			openPortsText.setText(output.toString());
+				
+			};
+			//updates the progress animation
+			progressSystem.progressProperty().bind(scanTask.progressProperty());
+			
+			//Start task in a new thread
+	        Thread thread = new Thread(scanTask);
+	
+	        // ends automatic with the app
+	        thread.setDaemon(true);
+	        thread.start();
 		}
 		
 		
