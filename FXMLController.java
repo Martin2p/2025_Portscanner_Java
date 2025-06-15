@@ -56,7 +56,6 @@ import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
 
-
 public class FXMLController {
 	
 	/*
@@ -168,13 +167,15 @@ public class FXMLController {
 
 		         try {
 		             runningJmDNS.close();
-		             System.out.println("JmDNS wurde manuell geschlossen.");
+		             
+		             //logging
+		             System.out.println("JmDNS was closed manual.");
 		            } catch (IOException e) {
-		            	System.err.println("Fehler beim Schließen von JmDNS: " + e.getMessage());
+		            	System.err.println("Error while closing JmDNS: " + e.getMessage());
 		            }
 		            runningJmDNS = null;
 		        }
-		        // GUI zurücksetzen
+		        // GUI reset:
 		        Platform.runLater(() -> {
 			        progressLocal.progressProperty().unbind();
 			        progressLocal.setProgress(0);
@@ -311,9 +312,10 @@ public class FXMLController {
 		        @Override
 		        public void serviceAdded(ServiceEvent event) {
 		            String type = event.getName() + "." + event.getType();
+		            //logging
 		            System.out.println("Found service: " + type);
 
-		            // Jetzt nach konkreten Services dieses Typs lauschen:
+		            // using listner für JmDNS
 		            runningJmDNS.addServiceListener(type, new ServiceListener() {
 		                @Override
 		                public void serviceResolved(ServiceEvent event) {
@@ -344,19 +346,20 @@ public class FXMLController {
 		        @Override public void serviceRemoved(ServiceEvent e) { }
 		    });
 
-		    // Wartezeit zum Finden
+		    // Timeout to find
 		    int waitMs = 100;
 		    int totalTime = 10_000;
 
 		    for (int waited = 0; waited < totalTime; waited += waitMs) {
 		        if (task.isCancelled()) {
+		        	//logging
 		            System.out.println("mDNS-Scan stopped.");
 		            break;
 		        }
 		        Thread.sleep(waitMs);
 		    }
 
-		    // Aufräumen
+		    // Cleaning
 		    runningJmDNS.close();
 		    runningJmDNS = null;
 		}
@@ -365,7 +368,7 @@ public class FXMLController {
 		// Scanning for other hosts in the local network
 		@FXML protected void gettingHosts(ActionEvent event) throws IOException {
 			
-			//just to controll
+			//logging
 			System.out.println("Starting scan task...");
 			//for that GUI does not freeze, there is a own task in the background
 			currentMdnsTask = new Task<>() {
@@ -375,6 +378,7 @@ public class FXMLController {
 					//GUI-info for scanning
 					Platform.runLater(() -> { 
 						localHosts.setText("Scanning...");
+						//logging
 						System.out.println("Scan task is running...");
 						//show an visual indicator
 						progressLocal.setVisible(true);
@@ -389,7 +393,7 @@ public class FXMLController {
 						startMdnsScan(this);
 						return null;
 					} else {
-		                Platform.runLater(() -> localHosts.setText("Bitte eine Scan-Methode auswählen."));
+		                Platform.runLater(() -> localHosts.setText("Please choose a scan method."));
 		            }
 					// GUI: hiding progress
 					Platform.runLater(() -> {
@@ -412,4 +416,4 @@ public class FXMLController {
 	        thread.setDaemon(true);
 	        thread.start();
 		}
-}	
+}
