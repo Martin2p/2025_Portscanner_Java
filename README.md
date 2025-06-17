@@ -43,5 +43,5 @@ Fragen, Feedback oder Interesse an einer Lizenz für kommerzielle Nutzung?
 ---
 
 ## Status
-Projekt befindet sich in Entwicklung – gerne Feedback oder Vorschläge als Issue einreichen!
-Project is under development - Feedback is welcome!
+Projekt ist abgeschlossen.
+Project is finished.
