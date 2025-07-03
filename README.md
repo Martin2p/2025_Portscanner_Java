@@ -3,6 +3,9 @@
 Ein einfacher Portscanner in JavaFX zur Erkennung erreichbarer Geräte im lokalen Netzwerk über geöffnete Ports – ohne ICMP-Ping.  
 Erkennt u. a. Smartphones, Drucker oder Smart-TVs über gängige Ports (22, 80, 443, 5555, 62078 etc.).
 
+![Screenshot](assets/Portscanner_version_1.png)
+
+
 ## Features
 - Scan eines IP-Subnets (z. B. 192.168.0.0/24)
 - Erkennt Geräte durch Port-Verbindung statt Ping
